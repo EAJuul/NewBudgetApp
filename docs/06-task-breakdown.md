@@ -38,7 +38,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M0-T08** — Project `README` + `CONTRIBUTING` pointing at `docs/`. _Deps: M0-T01._
 
 ## M1 — Data layer foundations
-- [ ] **M1-T01** — `Money` value object (`core/money/`). _Deps: M0-T05._
+- [x] **M1-T01** — `Money` value object (`core/money/`). _Deps: M0-T05._
 - [ ] **M1-T02** — `MonthKey` value object (`core/time/`). _Deps: M0-T05._
 - [ ] **M1-T03** — Shared domain enums (account type, cleared status, flag
   color, schedule frequency, target type, system group type). _Deps: M0-T05._
