@@ -9,10 +9,10 @@ merged.
 - **Granularity:** each task is sized for one small-context LLM session — at
   most ~200 lines of new code plus its tests. If a task turns out larger, split
   it (`M4-T05a`, `M4-T05b`) and note it here.
-- **Detailed cards:** full task cards exist in `tasks/` for all of M0 and for
-  `M1-T01..M1-T04`. For every other task the orchestrator expands the one-line
-  entry below into `tasks/<ID>.md` using `tasks/TEMPLATE.md` before handing it
-  to a coder. See `10-agent-workflow.md`.
+- **Detailed cards:** full task cards exist in `tasks/` for all of M0, M1, and
+  M2. For every remaining task (M3 onward) the orchestrator expands the
+  one-line entry below into `tasks/<ID>.md` using `tasks/TEMPLATE.md` before
+  handing it to a coder. See `10-agent-workflow.md`.
 - **Definition of Done:** see `09-coding-standards.md`. In short — compiles,
   formatted, `analyze --fatal-infos` clean, tests written and green, acceptance
   criteria met, this checkbox ticked.
@@ -44,8 +44,8 @@ Legend: `[ ]` todo · `[x]` done & merged.
   color, schedule frequency, target type, system group type). _Deps: M0-T05._
 - [x] **M1-T04** — `AppDatabase` skeleton: connection, `schemaVersion = 1`,
   testing constructor, Riverpod provider. _Deps: M1-T03._
-- [ ] **M1-T05** — Tables: `budgets`, `accounts`. _Deps: M1-T04._
-- [ ] **M1-T06** — Tables: `category_groups`, `categories`. _Deps: M1-T04._
+- [x] **M1-T05** — Tables: `budgets`, `accounts`. _Deps: M1-T04._
+- [x] **M1-T06** — Tables: `category_groups`, `categories`. _Deps: M1-T04._
 - [ ] **M1-T07** — Tables: `category_budgets`, `targets`. _Deps: M1-T06._
 - [ ] **M1-T08** — Tables: `payees`, `settings`. _Deps: M1-T04._
 - [ ] **M1-T09** — Tables: `transactions`, `sub_transactions`. _Deps: M1-T05, M1-T06._
