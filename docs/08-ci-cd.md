@@ -4,10 +4,12 @@
 Two GitHub Actions workflows live in `.github/workflows/`.
 
 ### `ci.yml` — on every PR and push to `main`
-checkout → set up Flutter (stable) → `flutter pub get` → `build_runner build` →
-`dart format` check → `flutter analyze --fatal-infos` → `flutter test
---coverage` → upload `lcov.info`. A pull request cannot merge unless this is
-green.
+The `analyze-and-test` job: checkout → set up Flutter (stable) → `flutter pub
+get` → `build_runner build` → `dart format` check → `flutter analyze
+--fatal-infos` → `flutter test --coverage` → upload `lcov.info`. A second job,
+`build-android`, runs `flutter build apk --debug` so every PR proves the app
+still builds to a device target. A pull request cannot merge unless both jobs
+are green.
 
 ### `build.yml` — on a `v*` tag or manual dispatch
 Builds a release Android APK and an unsigned iOS build and uploads them as

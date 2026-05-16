@@ -8,7 +8,9 @@ roles; they may be one model in a loop or two different models.
   hands it off, then verifies and integrates the result. Needs the whole repo
   in view but writes little code. A larger model is a good fit.
 - **Coder** — implements exactly one task card. Designed to run with a **small
-  context window** (e.g. Qwen3 8B). It loads only what its card lists.
+  context window** (e.g. Qwen3 8B). It loads only what its card lists. Its
+  operating manual is the implementor skill in `docs/11-implementor-skill.md` —
+  load that as the agent's system prompt.
 
 ## The task card
 Every task is described by a card based on `tasks/TEMPLATE.md`. Detailed cards
@@ -69,7 +71,8 @@ A task is done when every item in the Definition of Done list in
 
 ## Quick reference — handoff prompt for a coder
 > Implement task `<ID>`. Read `tasks/<ID>.md`, `docs/09-coding-standards.md`,
-> and `docs/10-agent-workflow.md`. Touch only the files the card lists. Write
+> `docs/10-agent-workflow.md`, and `docs/11-implementor-skill.md`. Touch only
+> the files the card lists. Write
 > the code and the tests. Run `build_runner`, `dart format lib test`,
 > `flutter analyze --fatal-infos`, and `flutter test` — all must pass. If the
 > card is missing information or contradicts the codebase, reply with
