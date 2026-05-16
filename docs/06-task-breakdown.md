@@ -42,7 +42,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T02** — `MonthKey` value object (`core/time/`). _Deps: M0-T05._
 - [x] **M1-T03** — Shared domain enums (account type, cleared status, flag
   color, schedule frequency, target type, system group type). _Deps: M0-T05._
-- [ ] **M1-T04** — `AppDatabase` skeleton: connection, `schemaVersion = 1`,
+- [x] **M1-T04** — `AppDatabase` skeleton: connection, `schemaVersion = 1`,
   testing constructor, Riverpod provider. _Deps: M1-T03._
 - [ ] **M1-T05** — Tables: `budgets`, `accounts`. _Deps: M1-T04._
 - [ ] **M1-T06** — Tables: `category_groups`, `categories`. _Deps: M1-T04._
