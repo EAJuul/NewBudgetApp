@@ -23,19 +23,19 @@ Legend: `[ ]` todo · `[x]` done & merged.
 ---
 
 ## M0 — Project setup & CI
-- [ ] **M0-T01** — Initialize the Flutter project: run `flutter create` to
+- [x] **M0-T01** — Initialize the Flutter project: run `flutter create` to
   generate `android/`, `ios/`, etc.; verify Flutter ≥ 3.24 / Dart ≥ 3.5.
-- [ ] **M0-T02** — Apply `pubspec.yaml`; run `flutter pub get`; confirm
+- [x] **M0-T02** — Apply `pubspec.yaml`; run `flutter pub get`; confirm
   `build_runner` runs clean. _Deps: M0-T01._
-- [ ] **M0-T03** — Apply `analysis_options.yaml`; fix any baseline lint;
+- [x] **M0-T03** — Apply `analysis_options.yaml`; fix any baseline lint;
   confirm `dart format` and `flutter analyze` pass. _Deps: M0-T02._
-- [ ] **M0-T04** — Create the `core/ data/ domain/ features/` folder structure
+- [x] **M0-T04** — Create the `core/ data/ domain/ features/` folder structure
   with placeholder barrel files. _Deps: M0-T01._
-- [ ] **M0-T05** — App shell: `go_router` skeleton, Material 3 theme, a single
+- [x] **M0-T05** — App shell: `go_router` skeleton, Material 3 theme, a single
   placeholder route. _Deps: M0-T03, M0-T04._
 - [ ] **M0-T06** — Verify `ci.yml` is green on a real pull request. _Deps: M0-T05._
 - [ ] **M0-T07** — Verify `build.yml` produces an Android APK artifact. _Deps: M0-T06._
-- [ ] **M0-T08** — Project `README` + `CONTRIBUTING` pointing at `docs/`. _Deps: M0-T01._
+- [x] **M0-T08** — Project `README` + `CONTRIBUTING` pointing at `docs/`. _Deps: M0-T01._
 
 ## M1 — Data layer foundations
 - [ ] **M1-T01** — `Money` value object (`core/money/`). _Deps: M0-T05._

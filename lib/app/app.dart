@@ -1,24 +1,20 @@
+import 'package:budget_app/app/router.dart';
+import 'package:budget_app/app/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Root widget of NewBudgetApp.
-///
-/// Placeholder shell created during scaffolding. Task M0-T05 replaces the
-/// `home` argument with a `go_router` configuration. See docs/02-architecture.md.
-class BudgetApp extends StatelessWidget {
+class BudgetApp extends ConsumerWidget {
   const BudgetApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final goRouter = ref.watch(routerProvider);
+    return MaterialApp.router(
       title: 'NewBudgetApp',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: const Color(0xFF2E7D32),
-      ),
-      home: const Scaffold(
-        body: Center(child: Text('NewBudgetApp — scaffold ready')),
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      routerConfig: goRouter,
     );
   }
 }
