@@ -1,0 +1,23 @@
+# Static analysis configuration for NewBudgetApp.
+# Rationale and the full ruleset rules are documented in docs/09-coding-standards.md.
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    # freezed places annotations in a way the analyzer flags as misplaced.
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    # Doc comments on every public member are not required; meaningful names
+    # plus docs on non-obvious APIs are. See docs/09-coding-standards.md.
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
