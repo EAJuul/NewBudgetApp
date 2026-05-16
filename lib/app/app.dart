@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 /// Root widget of NewBudgetApp.
 ///
-/// Placeholder shell created during scaffolding. Task M0-T05 replaces [home]
-/// with a `go_router` configuration. See docs/02-architecture.md.
+/// Placeholder shell created during scaffolding. Task M0-T05 replaces the
+/// `home` argument with a `go_router` configuration. See docs/02-architecture.md.
 class BudgetApp extends StatelessWidget {
   const BudgetApp({super.key});
 
