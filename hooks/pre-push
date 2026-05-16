@@ -1,0 +1,20 @@
+#!/bin/sh
+# Pre-push verification gate for NewBudgetApp — see docs/11-implementor-skill.md.
+# Enable once per clone:  git config core.hooksPath hooks
+#
+# Rejects a push when static analysis or tests fail, so broken code never
+# leaves the machine.
+set -e
+
+if ! command -v flutter >/dev/null 2>&1; then
+  echo "pre-push: flutter is not on PATH — cannot run the gate. Push aborted." >&2
+  exit 1
+fi
+
+echo "pre-push: flutter analyze --fatal-infos"
+flutter analyze --fatal-infos
+
+echo "pre-push: flutter test"
+flutter test
+
+echo "pre-push: gate passed."

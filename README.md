@@ -31,6 +31,7 @@ data lives on the device; no server, no account, no network dependency.
 | `docs/08-ci-cd.md` | GitHub Actions, branching, releases |
 | `docs/09-coding-standards.md` | Conventions every coder must follow |
 | `docs/10-agent-workflow.md` | How the orchestrator + coder agents execute tasks |
+| `docs/11-implementor-skill.md` | The coder agent's operating manual — load it as the agent's system prompt |
 
 ## Tech stack
 Flutter + Dart · Riverpod · Drift (SQLite) · go_router · freezed · GitHub
