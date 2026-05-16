@@ -40,7 +40,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 ## M1 — Data layer foundations
 - [x] **M1-T01** — `Money` value object (`core/money/`). _Deps: M0-T05._
 - [x] **M1-T02** — `MonthKey` value object (`core/time/`). _Deps: M0-T05._
-- [ ] **M1-T03** — Shared domain enums (account type, cleared status, flag
+- [x] **M1-T03** — Shared domain enums (account type, cleared status, flag
   color, schedule frequency, target type, system group type). _Deps: M0-T05._
 - [ ] **M1-T04** — `AppDatabase` skeleton: connection, `schemaVersion = 1`,
   testing constructor, Riverpod provider. _Deps: M1-T03._
