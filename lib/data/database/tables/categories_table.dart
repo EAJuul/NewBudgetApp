@@ -2,6 +2,7 @@ import 'package:budget_app/data/database/tables/accounts_table.dart';
 import 'package:budget_app/data/database/tables/category_groups_table.dart';
 import 'package:drift/drift.dart';
 
+@DataClassName('CategoryRow')
 class Categories extends Table {
   TextColumn get id => text()();
   TextColumn get groupId => text().references(CategoryGroups, #id)();

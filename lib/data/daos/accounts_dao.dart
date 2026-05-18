@@ -9,12 +9,12 @@ class AccountsDao extends DatabaseAccessor<AppDatabase>
     with _$AccountsDaoMixin {
   AccountsDao(super.attachedDatabase);
 
-  Stream<List<Account>> watchByBudget(String budgetId) => (select(accounts)
+  Stream<List<AccountRow>> watchByBudget(String budgetId) => (select(accounts)
         ..where((t) => t.budgetId.equals(budgetId))
         ..orderBy([(t) => OrderingTerm(expression: t.sortOrder)]))
       .watch();
 
-  Future<Account?> findById(String id) =>
+  Future<AccountRow?> findById(String id) =>
       (select(accounts)..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(AccountsCompanion account) =>

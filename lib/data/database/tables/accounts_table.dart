@@ -2,6 +2,7 @@ import 'package:budget_app/data/database/tables/budgets_table.dart';
 import 'package:budget_app/domain/enums.dart';
 import 'package:drift/drift.dart';
 
+@DataClassName('AccountRow')
 class Accounts extends Table {
   TextColumn get id => text()();
   TextColumn get budgetId => text().references(Budgets, #id)();
