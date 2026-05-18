@@ -55,7 +55,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T12** — `Account` entity + `AccountRepository` interface. _Deps: M1-T01._
 - [x] **M1-T13** — `AccountsDao`. _Deps: M1-T11._
 - [x] **M1-T14** — `AccountRepositoryImpl` + row↔entity mappers + tests. _Deps: M1-T12, M1-T13._
-- [ ] **M1-T15** — `CategoryGroup` + `Category` entities + `CategoryRepository`
+- [x] **M1-T15** — `CategoryGroup` + `Category` entities + `CategoryRepository`
   interface. _Deps: M1-T01._
 - [ ] **M1-T16** — `CategoriesDao`. _Deps: M1-T11._
 - [ ] **M1-T17** — `CategoryRepositoryImpl` + mappers + tests. _Deps: M1-T15, M1-T16._
