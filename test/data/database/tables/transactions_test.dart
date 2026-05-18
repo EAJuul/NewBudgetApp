@@ -10,7 +10,10 @@ part 'transactions_test.g.dart';
 
 @DriftDatabase(tables: [Transactions, SubTransactions])
 class _TestDb extends _$_TestDb {
-  _TestDb() : super(NativeDatabase.memory());
+  _TestDb()
+      : super(NativeDatabase.memory(
+          setup: (db) => db.execute('PRAGMA foreign_keys = ON'),
+        ));
 
   @override
   int get schemaVersion => 1;
@@ -158,23 +161,22 @@ void main() {
       expect(row.deleted, isTrue);
     });
 
-    test('SubTransactions with non-existent transactionId', () async {
+    test('SubTransactions rejects non-existent transactionId (FK enforced)',
+        () async {
       final subTxnId = uuid.v4();
       const nonExistentTxnId = 'does-not-exist';
 
-      // Verify that we can attempt to insert a SubTransaction with a non-existent
-      // transactionId. Foreign key enforcement is database-dependent.
-      // This test ensures the column structure accepts text values.
-      final result = await db.into(db.subTransactions).insert(
-            SubTransactionsCompanion.insert(
-              id: subTxnId,
-              transactionId: nonExistentTxnId,
-              amount: 5000,
-              deleted: false,
+      await expectLater(
+        () => db.into(db.subTransactions).insert(
+              SubTransactionsCompanion.insert(
+                id: subTxnId,
+                transactionId: nonExistentTxnId,
+                amount: 5000,
+                deleted: false,
+              ),
             ),
-          );
-
-      expect(result, greaterThan(0));
+        throwsA(anything),
+      );
     });
   });
 }
