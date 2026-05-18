@@ -1,4 +1,8 @@
+import 'package:budget_app/data/database/tables/accounts_table.dart';
+import 'package:budget_app/data/database/tables/budgets_table.dart';
+import 'package:budget_app/data/database/tables/categories_table.dart';
 import 'package:budget_app/data/database/tables/category_budgets_table.dart';
+import 'package:budget_app/data/database/tables/category_groups_table.dart';
 import 'package:budget_app/data/database/tables/targets_table.dart';
 import 'package:budget_app/domain/enums.dart';
 import 'package:drift/drift.dart';
@@ -7,7 +11,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 part 'category_budgets_targets_test.g.dart';
 
-@DriftDatabase(tables: [CategoryBudgets, Targets])
+@DriftDatabase(
+  tables: [
+    CategoryBudgets,
+    Targets,
+    Categories,
+    CategoryGroups,
+    Budgets,
+    Accounts,
+  ],
+)
 class _TestDb extends _$_TestDb {
   _TestDb() : super(NativeDatabase.memory());
 

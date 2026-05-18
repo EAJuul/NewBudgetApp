@@ -1,3 +1,5 @@
+import 'package:budget_app/data/database/tables/accounts_table.dart';
+import 'package:budget_app/data/database/tables/budgets_table.dart';
 import 'package:budget_app/data/database/tables/categories_table.dart';
 import 'package:budget_app/data/database/tables/category_groups_table.dart';
 import 'package:budget_app/domain/enums.dart';
@@ -8,7 +10,14 @@ import 'package:uuid/uuid.dart';
 
 part 'category_groups_categories_test.g.dart';
 
-@DriftDatabase(tables: [CategoryGroups, Categories])
+@DriftDatabase(
+  tables: [
+    CategoryGroups,
+    Categories,
+    Accounts,
+    Budgets,
+  ],
+)
 class _TestDb extends _$_TestDb {
   _TestDb() : super(NativeDatabase.memory());
 

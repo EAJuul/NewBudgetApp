@@ -1,3 +1,9 @@
+import 'package:budget_app/data/database/tables/accounts_table.dart';
+import 'package:budget_app/data/database/tables/budgets_table.dart';
+import 'package:budget_app/data/database/tables/categories_table.dart';
+import 'package:budget_app/data/database/tables/category_groups_table.dart';
+import 'package:budget_app/data/database/tables/payees_table.dart';
+import 'package:budget_app/data/database/tables/scheduled_transactions_table.dart';
 import 'package:budget_app/data/database/tables/sub_transactions_table.dart';
 import 'package:budget_app/data/database/tables/transactions_table.dart';
 import 'package:budget_app/domain/enums.dart';
@@ -8,12 +14,25 @@ import 'package:uuid/uuid.dart';
 
 part 'transactions_test.g.dart';
 
-@DriftDatabase(tables: [Transactions, SubTransactions])
+@DriftDatabase(
+  tables: [
+    Transactions,
+    SubTransactions,
+    Accounts,
+    Budgets,
+    Categories,
+    CategoryGroups,
+    Payees,
+    ScheduledTransactions,
+  ],
+)
 class _TestDb extends _$_TestDb {
   _TestDb()
-      : super(NativeDatabase.memory(
-          setup: (db) => db.execute('PRAGMA foreign_keys = ON'),
-        ));
+      : super(
+          NativeDatabase.memory(
+            setup: (db) => db.execute('PRAGMA foreign_keys = ON'),
+          ),
+        );
 
   @override
   int get schemaVersion => 1;
@@ -22,12 +41,40 @@ class _TestDb extends _$_TestDb {
 void main() {
   const uuid = Uuid();
   const timestamp = '2026-05-16T12:00:00Z';
+  const budgetId = 'budget-1';
+  const accountId = 'account-1';
 
   group('Transactions and SubTransactions tables', () {
     late _TestDb db;
-    const accountId = 'account-1';
 
-    setUp(() => db = _TestDb());
+    setUp(() async {
+      db = _TestDb();
+      // Insert required parent records for FK constraints
+      await db.into(db.budgets).insert(
+            BudgetsCompanion.insert(
+              id: budgetId,
+              name: 'Test Budget',
+              currencyCode: 'USD',
+              currencyDecimalDigits: 2,
+              dateFormat: 'MM/dd/yyyy',
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            ),
+          );
+      await db.into(db.accounts).insert(
+            AccountsCompanion.insert(
+              id: accountId,
+              budgetId: budgetId,
+              name: 'Test Account',
+              type: AccountType.checking,
+              onBudget: true,
+              closed: false,
+              sortOrder: 0,
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            ),
+          );
+    });
 
     tearDown(() => db.close());
 
