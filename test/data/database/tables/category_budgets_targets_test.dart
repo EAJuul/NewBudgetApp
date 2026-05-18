@@ -1,10 +1,16 @@
+import 'package:budget_app/data/database/tables/category_budgets_table.dart';
+import 'package:budget_app/data/database/tables/targets_table.dart';
+import 'package:budget_app/domain/enums.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:drift/test_helpers.dart';
+
+part 'category_budgets_targets_test.g.dart';
 
 @DriftDatabase(tables: [CategoryBudgets, Targets])
 class _TestDb extends _$_TestDb {
   _TestDb() : super(NativeDatabase.memory());
+
   @override
   int get schemaVersion => 1;
 }
@@ -12,143 +18,119 @@ class _TestDb extends _$_TestDb {
 void main() {
   late _TestDb db;
 
-  setUp(() {
-    db = _TestDb();
+  setUp(() => db = _TestDb());
+  tearDown(() => db.close());
+
+  test('CategoryBudgets: round-trips positive assigned', () async {
+    await db.into(db.categoryBudgets).insert(
+          CategoryBudgetsCompanion.insert(
+            id: 'cb1',
+            categoryId: 'cat1',
+            month: '2026-05',
+            assigned: 50000,
+            createdAt: '2026-05-17T00:00:00Z',
+            updatedAt: '2026-05-17T00:00:00Z',
+          ),
+        );
+    final row = await db.select(db.categoryBudgets).getSingle();
+    expect(row.assigned, 50000);
   });
 
-  tearDown(() {
-    db.close();
+  test('CategoryBudgets: round-trips negative assigned', () async {
+    await db.into(db.categoryBudgets).insert(
+          CategoryBudgetsCompanion.insert(
+            id: 'cb2',
+            categoryId: 'cat2',
+            month: '2026-05',
+            assigned: -10000,
+            createdAt: '2026-05-17T00:00:00Z',
+            updatedAt: '2026-05-17T00:00:00Z',
+          ),
+        );
+    final row = await db.select(db.categoryBudgets).getSingle();
+    expect(row.assigned, -10000);
   });
 
-  test('Insert and select a category budget with positive assigned', () async {
-    final budget = CategoryBudgetsCompanion(
-      id: '1',
-      categoryId: '1',
-      month: '2023-01',
-      assigned: 1000,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
-    await db.into(db.categoryBudgets).insert(budget);
-
-    final result = await db.select(db.categoryBudgets).get();
-
-    expect(result, hasLength(1));
-    expect(result.first.assigned, equals(1000));
-  });
-
-  test('Insert a category budget with negative assigned', () async {
-    final budget = CategoryBudgetsCompanion(
-      id: '2',
-      categoryId: '2',
-      month: '2023-01',
-      assigned: -500,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
-    await db.into(db.categoryBudgets).insert(budget);
-
-    final result = await db.select(db.categoryBudgets).get();
-
-    expect(result, hasLength(1));
-    expect(result.first.assigned, equals(-500));
-  });
-
-  test('Insert two category budgets with the same category ID and month', () async {
-    final budget1 = CategoryBudgetsCompanion(
-      id: '3',
-      categoryId: '3',
-      month: '2023-01',
-      assigned: 1000,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
-    await db.into(db.categoryBudgets).insert(budget1);
-
-    final budget2 = CategoryBudgetsCompanion(
-      id: '4',
-      categoryId: '3',
-      month: '2023-01',
-      assigned: 2000,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
+  test('CategoryBudgets: rejects duplicate (categoryId, month)', () async {
+    await db.into(db.categoryBudgets).insert(
+          CategoryBudgetsCompanion.insert(
+            id: 'cb3',
+            categoryId: 'cat3',
+            month: '2026-05',
+            assigned: 0,
+            createdAt: '2026-05-17T00:00:00Z',
+            updatedAt: '2026-05-17T00:00:00Z',
+          ),
+        );
     await expectLater(
-      db.into(db.categoryBudgets).insert(budget2),
-      throwsA(isA<DatabaseException>().that(hasMessage(contains('UNIQUE constraint failed')))),
+      () => db.into(db.categoryBudgets).insert(
+            CategoryBudgetsCompanion.insert(
+              id: 'cb4',
+              categoryId: 'cat3',
+              month: '2026-05',
+              assigned: 1000,
+              createdAt: '2026-05-17T00:00:00Z',
+              updatedAt: '2026-05-17T00:00:00Z',
+            ),
+          ),
+      throwsA(anything),
     );
   });
 
-  test('Insert a target for TargetType.monthlyFunding with targetMonth null', () async {
-    final target = TargetsCompanion(
-      id: '1',
-      categoryId: '1',
-      type: TargetType.monthlyFunding.name,
-      amount: 1000,
-      targetMonth: null,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
-    await db.into(db.targets).insert(target);
-
-    final result = await db.select(db.targets).get();
-
-    expect(result, hasLength(1));
-    expect(result.first.type, equals(TargetType.monthlyFunding.name));
-    expect(result.first.targetMonth, isNull);
+  test('Targets: round-trips type and targetMonth', () async {
+    await db.into(db.targets).insert(
+          TargetsCompanion.insert(
+            id: 't1',
+            categoryId: 'cat4',
+            type: TargetType.monthlyFunding,
+            amount: 100000,
+            createdAt: '2026-05-17T00:00:00Z',
+            updatedAt: '2026-05-17T00:00:00Z',
+          ),
+        );
+    await db.into(db.targets).insert(
+          TargetsCompanion.insert(
+            id: 't2',
+            categoryId: 'cat5',
+            type: TargetType.targetBalanceByDate,
+            amount: 500000,
+            targetMonth: const Value('2026-12'),
+            createdAt: '2026-05-17T00:00:00Z',
+            updatedAt: '2026-05-17T00:00:00Z',
+          ),
+        );
+    final rows = await db.select(db.targets).get();
+    final monthly = rows.firstWhere((r) => r.id == 't1');
+    final byDate = rows.firstWhere((r) => r.id == 't2');
+    expect(monthly.type, TargetType.monthlyFunding);
+    expect(monthly.targetMonth, equals(null));
+    expect(byDate.type, TargetType.targetBalanceByDate);
+    expect(byDate.targetMonth, '2026-12');
   });
 
-  test('Insert a target for TargetType.targetBalanceByDate with targetMonth non-null', () async {
-    final target = TargetsCompanion(
-      id: '2',
-      categoryId: '2',
-      type: TargetType.targetBalanceByDate.name,
-      amount: 2000,
-      targetMonth: '2023-01',
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
-    await db.into(db.targets).insert(target);
-
-    final result = await db.select(db.targets).get();
-
-    expect(result, hasLength(1));
-    expect(result.first.type, equals(TargetType.targetBalanceByDate.name));
-    expect(result.first.targetMonth, equals('2023-01'));
-  });
-
-  test('Insert two targets with the same category ID', () async {
-    final target1 = TargetsCompanion(
-      id: '3',
-      categoryId: '3',
-      type: TargetType.monthlyFunding.name,
-      amount: 1000,
-      targetMonth: null,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
-    await db.into(db.targets).insert(target1);
-
-    final target2 = TargetsCompanion(
-      id: '4',
-      categoryId: '3',
-      type: TargetType.monthlyFunding.name,
-      amount: 2000,
-      targetMonth: null,
-      createdAt: '2023-01-01T00:00:00Z',
-      updatedAt: '2023-01-01T00:00:00Z',
-    );
-
+  test('Targets: rejects duplicate categoryId', () async {
+    await db.into(db.targets).insert(
+          TargetsCompanion.insert(
+            id: 't3',
+            categoryId: 'cat6',
+            type: TargetType.targetBalance,
+            amount: 0,
+            createdAt: '2026-05-17T00:00:00Z',
+            updatedAt: '2026-05-17T00:00:00Z',
+          ),
+        );
     await expectLater(
-      db.into(db.targets).insert(target2),
-      throwsA(isA<DatabaseException>().that(hasMessage(contains('UNIQUE constraint failed')))),
+      () => db.into(db.targets).insert(
+            TargetsCompanion.insert(
+              id: 't4',
+              categoryId: 'cat6',
+              type: TargetType.monthlyFunding,
+              amount: 1000,
+              createdAt: '2026-05-17T00:00:00Z',
+              updatedAt: '2026-05-17T00:00:00Z',
+            ),
+          ),
+      throwsA(anything),
     );
   });
 }

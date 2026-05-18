@@ -4,8 +4,8 @@ import 'package:drift/drift.dart';
 class CategoryBudgets extends Table {
   TextColumn get id => text()();
   TextColumn get categoryId => text()();
-  TextColumn get month => text()();            // 'YYYY-MM'
-  IntColumn get assigned => integer()();        // milliunits; may be negative
+  TextColumn get month => text()(); // 'YYYY-MM'
+  IntColumn get assigned => integer()(); // milliunits; may be negative
   TextColumn get createdAt => text()();
   TextColumn get updatedAt => text()();
 

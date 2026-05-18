@@ -1,5 +1,5 @@
+import 'package:budget_app/domain/enums.dart';
 import 'package:drift/drift.dart';
-import 'package:drift/generated/tables.dart';
 
 @DataClassName('TargetRow')
 class Targets extends Table {

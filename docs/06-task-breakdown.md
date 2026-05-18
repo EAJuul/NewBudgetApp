@@ -46,7 +46,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
   testing constructor, Riverpod provider. _Deps: M1-T03._
 - [x] **M1-T05** — Tables: `budgets`, `accounts`. _Deps: M1-T04._
 - [x] **M1-T06** — Tables: `category_groups`, `categories`. _Deps: M1-T04._
-- [ ] **M1-T07** — Tables: `category_budgets`, `targets`. _Deps: M1-T06._
+- [x] **M1-T07** — Tables: `category_budgets`, `targets`. _Deps: M1-T06._
 - [ ] **M1-T08** — Tables: `payees`, `settings`. _Deps: M1-T04._
 - [ ] **M1-T09** — Tables: `transactions`, `sub_transactions`. _Deps: M1-T05, M1-T06._
 - [ ] **M1-T10** — Table: `scheduled_transactions`. _Deps: M1-T05, M1-T06._
