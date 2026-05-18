@@ -53,7 +53,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T11** — Wire all tables into `AppDatabase`; `MigrationStrategy`
   skeleton; export schema JSON. _Deps: M1-T05..M1-T10._
 - [x] **M1-T12** — `Account` entity + `AccountRepository` interface. _Deps: M1-T01._
-- [ ] **M1-T13** — `AccountsDao`. _Deps: M1-T11._
+- [x] **M1-T13** — `AccountsDao`. _Deps: M1-T11._
 - [ ] **M1-T14** — `AccountRepositoryImpl` + row↔entity mappers + tests. _Deps: M1-T12, M1-T13._
 - [ ] **M1-T15** — `CategoryGroup` + `Category` entities + `CategoryRepository`
   interface. _Deps: M1-T01._
