@@ -63,7 +63,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T19** — `Transaction` + `SubTransaction` entities + `TransactionRepository`
   interface. _Deps: M1-T01._
 - [x] **M1-T20** — `TransactionsDao` (incl. split & transfer queries). _Deps: M1-T11._
-- [ ] **M1-T21** — `TransactionRepositoryImpl` + mappers + tests. _Deps: M1-T19, M1-T20._
+- [x] **M1-T21** — `TransactionRepositoryImpl` + mappers + tests. _Deps: M1-T19, M1-T20._
 - [ ] **M1-T22** — `Payee` entity + repo interface + DAO + impl. _Deps: M1-T11._
 - [ ] **M1-T23** — `Target` entity + repo interface + DAO + impl. _Deps: M1-T11._
 - [ ] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
