@@ -11,6 +11,7 @@ import 'package:budget_app/features/categories/domain/category.dart';
 import 'package:budget_app/features/categories/domain/category_repository.dart';
 import 'package:budget_app/features/transactions/domain/sub_transaction.dart';
 import 'package:budget_app/features/transactions/domain/transaction_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class BudgetService {
   BudgetService({
@@ -124,5 +125,46 @@ class BudgetService {
       readyToAssign: rta,
       lines: lines,
     );
+  }
+
+  /// Moves [amount] from [fromCategoryId] to [toCategoryId] for [month] by
+  /// adjusting each category's `assigned` for that month.
+  Future<void> moveMoney({
+    required String fromCategoryId,
+    required String toCategoryId,
+    required MonthKey month,
+    required Money amount,
+  }) async {
+    // Load the 'from' category budget for this month
+    final fromBudget = await _categoryBudgetRepository.find(
+      fromCategoryId,
+      month,
+    );
+    final fromAssigned = fromBudget?.assigned ?? const Money.zero();
+    final newFromAssigned = fromAssigned - amount;
+    final fromCategoryBudget = CategoryBudget(
+      id: fromBudget?.id ?? const Uuid().v4(),
+      categoryId: fromCategoryId,
+      month: month,
+      assigned: newFromAssigned,
+    );
+
+    // Load the 'to' category budget for this month
+    final toBudget = await _categoryBudgetRepository.find(
+      toCategoryId,
+      month,
+    );
+    final toAssigned = toBudget?.assigned ?? const Money.zero();
+    final newToAssigned = toAssigned + amount;
+    final toCategoryBudget = CategoryBudget(
+      id: toBudget?.id ?? const Uuid().v4(),
+      categoryId: toCategoryId,
+      month: month,
+      assigned: newToAssigned,
+    );
+
+    // Persist both
+    await _categoryBudgetRepository.save(fromCategoryBudget);
+    await _categoryBudgetRepository.save(toCategoryBudget);
   }
 }
