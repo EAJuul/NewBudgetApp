@@ -71,7 +71,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T26** — Riverpod providers exposing every repository (DI wiring). _Deps: M1-T14..M1-T25._
 
 ## M2 — Budget engine (pure `domain/budgeting/`)
-- [ ] **M2-T01** — `BudgetFixture` test helper: builds a known in-memory budget. _Deps: M1-T26._
+- [x] **M2-T01** — `BudgetFixture` test helper: builds a known in-memory budget. _Deps: M1-T26._
 - [ ] **M2-T02** — Account balance calculator (working / cleared / uncleared). _Deps: M2-T01._
 - [ ] **M2-T03** — Category activity calculator (incl. splits). _Deps: M2-T01._
 - [ ] **M2-T04** — Category available calculator — simple rollover. _Deps: M2-T03._
