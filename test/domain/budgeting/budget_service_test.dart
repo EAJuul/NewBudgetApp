@@ -181,7 +181,9 @@ void main() {
 
       final service = _serviceFrom(fixture);
       final result = await service.computeMonth(
-          fixture.budgetId, const MonthKey(2099, 12),);
+        fixture.budgetId,
+        const MonthKey(2099, 12),
+      );
 
       expect(result.month, const MonthKey(2099, 12));
       expect(result.readyToAssign, const Money.zero());
