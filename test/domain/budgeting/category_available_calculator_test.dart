@@ -18,7 +18,11 @@ void main() {
       // Month 1: assigned=50000, activity=-30000 → available=20000
       // Month 2: assigned=50000, activity=-50000 → available=20000
       // Month 3: assigned=50000, activity=-10000 → available=60000
-      final months = [const MonthKey(2024, 1), const MonthKey(2024, 2), const MonthKey(2024, 3)];
+      final months = [
+        const MonthKey(2024, 1),
+        const MonthKey(2024, 2),
+        const MonthKey(2024, 3)
+      ];
       final result = computeCategoryAvailableSeries(
         months: months,
         assignedFor: (_) => const Money(50000),
@@ -36,10 +40,12 @@ void main() {
     test('assigned only (no activity) and activity only month', () {
       final result = computeCategoryAvailableSeries(
         months: [const MonthKey(2024, 1), const MonthKey(2024, 2)],
-        assignedFor: (m) =>
-            m == const MonthKey(2024, 1) ? const Money(40000) : const Money.zero(),
-        activityFor: (m) =>
-            m == const MonthKey(2024, 2) ? const Money(-15000) : const Money.zero(),
+        assignedFor: (m) => m == const MonthKey(2024, 1)
+            ? const Money(40000)
+            : const Money.zero(),
+        activityFor: (m) => m == const MonthKey(2024, 2)
+            ? const Money(-15000)
+            : const Money.zero(),
       );
       // Month 1: 0 + 40000 + 0 = 40000
       expect(result[const MonthKey(2024, 1)], const Money(40000));
@@ -54,8 +60,9 @@ void main() {
       final result = computeCategoryAvailableSeries(
         months: [const MonthKey(2024, 1), const MonthKey(2024, 2)],
         assignedFor: (_) => const Money(10000),
-        activityFor: (m) =>
-            m == const MonthKey(2024, 1) ? const Money(-50000) : const Money.zero(),
+        activityFor: (m) => m == const MonthKey(2024, 1)
+            ? const Money(-50000)
+            : const Money.zero(),
       );
       expect(result[const MonthKey(2024, 1)], const Money(-40000));
       expect(result[const MonthKey(2024, 2)], const Money(-30000));
@@ -66,8 +73,9 @@ void main() {
       // Month 2: assigned=-20000, activity=0 → available=30000
       final result = computeCategoryAvailableSeries(
         months: [const MonthKey(2024, 1), const MonthKey(2024, 2)],
-        assignedFor: (m) =>
-            m == const MonthKey(2024, 1) ? const Money(50000) : const Money(-20000),
+        assignedFor: (m) => m == const MonthKey(2024, 1)
+            ? const Money(50000)
+            : const Money(-20000),
         activityFor: (_) => const Money.zero(),
       );
       expect(result[const MonthKey(2024, 1)], const Money(50000));

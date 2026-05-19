@@ -64,7 +64,8 @@ void main() {
       expect(portion, const Money.zero());
     });
 
-    test('purchase partially funded: overspending portion equals remainder', () {
+    test('purchase partially funded: overspending portion equals remainder',
+        () {
       // category has 40, spend is 60 → overspend = 20
       final portion = creditOverspendingPortion(
         transactionAmount: const Money(-60000),

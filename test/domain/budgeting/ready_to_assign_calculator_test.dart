@@ -139,7 +139,8 @@ void main() {
         budgetId: 'b1',
         type: AccountType.asset, // off-budget
       );
-      final tx = _makeTx(id: 'tx1', accountId: 'a1', amount: const Money(999999));
+      final tx =
+          _makeTx(id: 'tx1', accountId: 'a1', amount: const Money(999999));
 
       final rta = computeReadyToAssign(
         accounts: [account],

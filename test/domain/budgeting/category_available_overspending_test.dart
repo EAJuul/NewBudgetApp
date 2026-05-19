@@ -21,7 +21,8 @@ void main() {
       expect(result[feb], const Money(10000)); // -20 carried forward
     });
 
-    test('cash overspending: negative carryover is dropped (zero rolls forward)',
+    test(
+        'cash overspending: negative carryover is dropped (zero rolls forward)',
         () {
       // Jan: 0 + 30 + (-50) = -20; creditOverspent(jan)=0 (all cash)
       // Feb carryover = max(-20, -0) = 0 → Feb: 0 + 30 + 0 = 30
@@ -75,8 +76,7 @@ void main() {
       final result = computeCategoryAvailableSeries(
         months: [jan, feb],
         assignedFor: (m) => m == jan ? const Money(50000) : const Money(10000),
-        activityFor: (m) =>
-            m == jan ? const Money(-20000) : const Money.zero(),
+        activityFor: (m) => m == jan ? const Money(-20000) : const Money.zero(),
         creditOverspentFor: (_) => const Money(99999),
       );
 
@@ -90,11 +90,9 @@ void main() {
       // Mar: 5+0+0=5
       final result = computeCategoryAvailableSeries(
         months: [jan, feb, mar],
-        assignedFor: (m) => m == jan || m == feb
-            ? const Money(10000)
-            : const Money.zero(),
-        activityFor: (m) =>
-            m == jan ? const Money(-30000) : const Money.zero(),
+        assignedFor: (m) =>
+            m == jan || m == feb ? const Money(10000) : const Money.zero(),
+        activityFor: (m) => m == jan ? const Money(-30000) : const Money.zero(),
         creditOverspentFor: (m) =>
             m == jan ? const Money(5000) : const Money.zero(),
       );

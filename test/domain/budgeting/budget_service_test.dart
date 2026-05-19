@@ -127,9 +127,15 @@ void main() {
       final cat2 = await fixture.addCategory(groupId: group.id, name: 'Cat2');
 
       await fixture.assign(
-          categoryId: cat1.id, month: const MonthKey(2024, 3), amount: const Money(100000),);
+        categoryId: cat1.id,
+        month: const MonthKey(2024, 3),
+        amount: const Money(100000),
+      );
       await fixture.assign(
-          categoryId: cat2.id, month: const MonthKey(2024, 3), amount: const Money(100000),);
+        categoryId: cat2.id,
+        month: const MonthKey(2024, 3),
+        amount: const Money(100000),
+      );
 
       await fixture.addTransaction(
         accountId: account.id,
@@ -174,8 +180,8 @@ void main() {
       addTearDown(fixture.dispose);
 
       final service = _serviceFrom(fixture);
-      final result =
-          await service.computeMonth(fixture.budgetId, const MonthKey(2099, 12));
+      final result = await service.computeMonth(
+          fixture.budgetId, const MonthKey(2099, 12));
 
       expect(result.month, const MonthKey(2099, 12));
       expect(result.readyToAssign, const Money.zero());

@@ -68,7 +68,8 @@ void main() {
       final monthBudget = await service.computeMonth(fixture.budgetId, month);
       expect(
         monthBudget.readyToAssign,
-        const Money(50000), // 200000 - 100000 - 50000 = 50000, unchanged by move
+        const Money(
+            50000), // 200000 - 100000 - 50000 = 50000, unchanged by move
       );
     });
 
@@ -149,7 +150,8 @@ void main() {
       final fromBudget = await fixture.categoryBudgets.find(from.id, month);
       final toBudget = await fixture.categoryBudgets.find(to.id, month);
 
-      expect(fromBudget!.assigned, const Money(-10000)); // 50000 - 60000 = -10000
+      expect(
+          fromBudget!.assigned, const Money(-10000)); // 50000 - 60000 = -10000
       expect(toBudget!.assigned, const Money(80000)); // 20000 + 60000
     });
 
