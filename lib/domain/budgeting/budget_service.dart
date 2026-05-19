@@ -127,6 +127,25 @@ class BudgetService {
     );
   }
 
+  /// Sets the `assigned` amount of [categoryId] for [month] to the absolute
+  /// value [amount] (not a delta). Creates the assignment row if none exists.
+  Future<void> setAssigned({
+    required String categoryId,
+    required MonthKey month,
+    required Money amount,
+  }) async {
+    final existing = await _categoryBudgetRepository.find(categoryId, month);
+    final budget = existing != null
+        ? existing.copyWith(assigned: amount)
+        : CategoryBudget(
+            id: const Uuid().v4(),
+            categoryId: categoryId,
+            month: month,
+            assigned: amount,
+          );
+    await _categoryBudgetRepository.save(budget);
+  }
+
   /// Moves [amount] from [fromCategoryId] to [toCategoryId] for [month] by
   /// adjusting each category's `assigned` for that month.
   Future<void> moveMoney({
