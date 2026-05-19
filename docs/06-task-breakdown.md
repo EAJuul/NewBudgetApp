@@ -86,7 +86,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M2-T13** — Credit-card spend → payment-category movement. _Deps: M2-T10._
 - [x] **M2-T14** — `advance(date, frequency)` scheduled-date function. _Deps: M2-T01._
 - [x] **M2-T15** — Target progress calculator (all four target types). _Deps: M2-T04._
-- [ ] **M2-T16** — Engine invariant checks + property-style tests. _Deps: M2-T07..M2-T15._
+- [x] **M2-T16** — Engine invariant checks + property-style tests. _Deps: M2-T07..M2-T15._
 
 ## M3 — Accounts feature
 - [ ] **M3-T01** — Account list controller. _Deps: M1-T26._
