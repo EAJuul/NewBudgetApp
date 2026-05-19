@@ -21,7 +21,7 @@ void main() {
       final months = [
         const MonthKey(2024, 1),
         const MonthKey(2024, 2),
-        const MonthKey(2024, 3)
+        const MonthKey(2024, 3),
       ];
       final result = computeCategoryAvailableSeries(
         months: months,
