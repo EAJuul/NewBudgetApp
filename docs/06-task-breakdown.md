@@ -66,7 +66,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T21** — `TransactionRepositoryImpl` + mappers + tests. _Deps: M1-T19, M1-T20._
 - [x] **M1-T22** — `Payee` entity + repo interface + DAO + impl. _Deps: M1-T11._
 - [x] **M1-T23** — `Target` entity + repo interface + DAO + impl. _Deps: M1-T11._
-- [ ] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
+- [x] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
 - [ ] **M1-T25** — `Budget` entity + repo + DAO + impl; `SettingsStore`. _Deps: M1-T11._
 - [ ] **M1-T26** — Riverpod providers exposing every repository (DI wiring). _Deps: M1-T14..M1-T25._
 
