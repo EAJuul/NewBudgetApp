@@ -11,16 +11,16 @@ void main() {
       final fixture = await BudgetFixture.create();
       addTearDown(fixture.dispose);
 
-      final account = await fixture.addAccount(name: 'Checking');
+      final account = await fixture.addAccount();
       final txns = await fixture.allTransactions();
       final result = computeAccountBalances(
         accountId: account.id,
         transactions: txns,
       );
 
-      expect(result.working, Money.zero());
-      expect(result.cleared, Money.zero());
-      expect(result.uncleared, Money.zero());
+      expect(result.working, const Money.zero());
+      expect(result.cleared, const Money.zero());
+      expect(result.uncleared, const Money.zero());
     });
 
     test('mixed uncleared and cleared transactions', () async {
@@ -31,15 +31,14 @@ void main() {
       // uncleared: +50000
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(50000),
-        cleared: ClearedStatus.uncleared,
+        date: DateTime(2024, 3),
+        amount: const Money(50000),
       );
       // cleared: -20000
       await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 2),
-        amount: Money(-20000),
+        amount: const Money(-20000),
         cleared: ClearedStatus.cleared,
       );
 
@@ -50,11 +49,11 @@ void main() {
       );
 
       // working = 50000 + (-20000) = 30000
-      expect(result.working, Money(30000));
+      expect(result.working, const Money(30000));
       // cleared = -20000
-      expect(result.cleared, Money(-20000));
+      expect(result.cleared, const Money(-20000));
       // uncleared = 30000 - (-20000) = 50000
-      expect(result.uncleared, Money(50000));
+      expect(result.uncleared, const Money(50000));
     });
 
     test('reconciled transaction counts toward cleared balance', () async {
@@ -64,8 +63,8 @@ void main() {
       final account = await fixture.addAccount();
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(100000),
+        date: DateTime(2024, 3),
+        amount: const Money(100000),
         cleared: ClearedStatus.reconciled,
       );
 
@@ -75,9 +74,9 @@ void main() {
         transactions: txns,
       );
 
-      expect(result.working, Money(100000));
-      expect(result.cleared, Money(100000));
-      expect(result.uncleared, Money.zero());
+      expect(result.working, const Money(100000));
+      expect(result.cleared, const Money(100000));
+      expect(result.uncleared, const Money.zero());
     });
 
     test('deleted transaction is excluded from all balances', () async {
@@ -87,13 +86,13 @@ void main() {
       final account = await fixture.addAccount();
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(10000),
+        date: DateTime(2024, 3),
+        amount: const Money(10000),
       );
       final toDelete = await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 2),
-        amount: Money(99999),
+        amount: const Money(99999),
       );
       await fixture.transactions.softDelete(toDelete.id);
 
@@ -109,25 +108,25 @@ void main() {
         transactions: allTxns,
       );
 
-      expect(result.working, Money(10000)); // only the non-deleted one
+      expect(result.working, const Money(10000)); // only the non-deleted one
     });
 
     test('transactions for a different account are excluded', () async {
       final fixture = await BudgetFixture.create();
       addTearDown(fixture.dispose);
 
-      final account1 = await fixture.addAccount(name: 'Checking');
+      final account1 = await fixture.addAccount();
       final account2 = await fixture.addAccount(name: 'Savings');
 
       await fixture.addTransaction(
         accountId: account1.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(30000),
+        date: DateTime(2024, 3),
+        amount: const Money(30000),
       );
       await fixture.addTransaction(
         accountId: account2.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(99999),
+        date: DateTime(2024, 3),
+        amount: const Money(99999),
       );
 
       final txns = await fixture.allTransactions();
@@ -136,7 +135,7 @@ void main() {
         transactions: txns,
       );
 
-      expect(result.working, Money(30000));
+      expect(result.working, const Money(30000));
     });
 
     test('negative working balance (outflows > inflows)', () async {
@@ -146,15 +145,14 @@ void main() {
       final account = await fixture.addAccount();
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(-75000),
+        date: DateTime(2024, 3),
+        amount: const Money(-75000),
         cleared: ClearedStatus.cleared,
       );
       await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 2),
-        amount: Money(20000),
-        cleared: ClearedStatus.uncleared,
+        amount: const Money(20000),
       );
 
       final txns = await fixture.allTransactions();
@@ -164,11 +162,11 @@ void main() {
       );
 
       // working = -75000 + 20000 = -55000
-      expect(result.working, Money(-55000));
+      expect(result.working, const Money(-55000));
       // cleared = -75000
-      expect(result.cleared, Money(-75000));
+      expect(result.cleared, const Money(-75000));
       // uncleared = -55000 - (-75000) = 20000
-      expect(result.uncleared, Money(20000));
+      expect(result.uncleared, const Money(20000));
     });
   });
 }

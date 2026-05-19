@@ -21,7 +21,7 @@ Transaction _makeTx({
     Transaction(
       id: id,
       accountId: accountId,
-      date: DateTime(2024, 3, 1),
+      date: DateTime(2024, 3),
       amount: amount,
       cleared: ClearedStatus.uncleared,
       approved: true,
@@ -53,11 +53,11 @@ void main() {
       final fixture = await BudgetFixture.create();
       addTearDown(fixture.dispose);
 
-      final account = await fixture.addAccount(name: 'Checking');
+      final account = await fixture.addAccount();
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(100000),
+        date: DateTime(2024, 3),
+        amount: const Money(100000),
         // No categoryId → inflow to RTA
       );
 
@@ -70,7 +70,7 @@ void main() {
         categoryBudgets: [],
       );
 
-      expect(rta, Money(100000));
+      expect(rta, const Money(100000));
     });
 
     test('assigning money reduces RTA by assigned total', () async {
@@ -80,15 +80,15 @@ void main() {
       final account = await fixture.addAccount();
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(100000),
+        date: DateTime(2024, 3),
+        amount: const Money(100000),
       );
       final group = await fixture.addGroup();
       final cat = await fixture.addCategory(groupId: group.id);
       final cb = await fixture.assign(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
-        amount: Money(30000),
+        month: const MonthKey(2024, 3),
+        amount: const Money(30000),
       );
 
       final accts = await fixture.allAccounts();
@@ -100,7 +100,7 @@ void main() {
         categoryBudgets: [cb],
       );
 
-      expect(rta, Money(70000)); // 100000 - 30000
+      expect(rta, const Money(70000)); // 100000 - 30000
     });
 
     test('assigning more than inflow yields negative RTA', () async {
@@ -110,15 +110,15 @@ void main() {
       final account = await fixture.addAccount();
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(50000),
+        date: DateTime(2024, 3),
+        amount: const Money(50000),
       );
       final group = await fixture.addGroup();
       final cat = await fixture.addCategory(groupId: group.id);
       final cb = await fixture.assign(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
-        amount: Money(80000),
+        month: const MonthKey(2024, 3),
+        amount: const Money(80000),
       );
 
       final accts = await fixture.allAccounts();
@@ -130,7 +130,7 @@ void main() {
         categoryBudgets: [cb],
       );
 
-      expect(rta, Money(-30000)); // 50000 - 80000
+      expect(rta, const Money(-30000)); // 50000 - 80000
     });
 
     test('inflow on off-budget account does not affect RTA', () {
@@ -139,7 +139,7 @@ void main() {
         budgetId: 'b1',
         type: AccountType.asset, // off-budget
       );
-      final tx = _makeTx(id: 'tx1', accountId: 'a1', amount: Money(999999));
+      final tx = _makeTx(id: 'tx1', accountId: 'a1', amount: const Money(999999));
 
       final rta = computeReadyToAssign(
         accounts: [account],
@@ -147,7 +147,7 @@ void main() {
         categoryBudgets: [],
       );
 
-      expect(rta, Money.zero());
+      expect(rta, const Money.zero());
     });
 
     test('deleted inflow is excluded', () {
@@ -155,7 +155,7 @@ void main() {
       final tx = _makeTx(
         id: 'tx1',
         accountId: 'a1',
-        amount: Money(100000),
+        amount: const Money(100000),
         deleted: true,
       );
 
@@ -165,7 +165,7 @@ void main() {
         categoryBudgets: [],
       );
 
-      expect(rta, Money.zero());
+      expect(rta, const Money.zero());
     });
 
     test('categorised transaction is not counted as RTA inflow', () {
@@ -173,7 +173,7 @@ void main() {
       final tx = _makeTx(
         id: 'tx1',
         accountId: 'a1',
-        amount: Money(100000),
+        amount: const Money(100000),
         categoryId: 'cat1', // categorised → not RTA inflow
       );
 
@@ -183,7 +183,7 @@ void main() {
         categoryBudgets: [],
       );
 
-      expect(rta, Money.zero());
+      expect(rta, const Money.zero());
     });
 
     test('transfer transaction is not counted as RTA inflow', () {
@@ -191,7 +191,7 @@ void main() {
       final tx = _makeTx(
         id: 'tx1',
         accountId: 'a1',
-        amount: Money(100000),
+        amount: const Money(100000),
         transferTransactionId: 'tx2', // is a transfer
       );
 
@@ -201,7 +201,7 @@ void main() {
         categoryBudgets: [],
       );
 
-      expect(rta, Money.zero());
+      expect(rta, const Money.zero());
     });
   });
 }

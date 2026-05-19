@@ -74,13 +74,13 @@ void main() {
     'save a simple transaction, findById returns domain entity with correct date and amount',
     () async {
       await seedBudgetAndAccount('b1', 'a1');
-      final tx = _makeTx(milliunits: -5000, date: DateTime(2024, 6, 1));
+      final tx = _makeTx(milliunits: -5000, date: DateTime(2024, 6));
       await repo.save(tx);
 
       final found = await repo.findById('tx1');
       expect(found, isNotNull);
       expect(found!.amount, const Money(-5000));
-      expect(found.date, DateTime(2024, 6, 1));
+      expect(found.date, DateTime(2024, 6));
       expect(found.accountId, 'a1');
     },
   );
@@ -192,7 +192,7 @@ void main() {
           ),
         );
 
-    await repo.save(_makeTx(id: 'tx1'));
+    await repo.save(_makeTx());
     await repo.save(_makeTx(id: 'tx2', accountId: 'a2'));
     await repo.save(_makeTx(id: 'tx3', accountId: 'a3'));
 

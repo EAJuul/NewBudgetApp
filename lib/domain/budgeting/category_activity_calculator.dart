@@ -15,7 +15,7 @@ Money computeCategoryActivity({
   // Index transactions by id for O(1) parent lookup
   final txMap = {for (final tx in transactions) tx.id: tx};
 
-  var total = Money.zero();
+  var total = const Money.zero();
 
   // Direct (non-split) contributions
   for (final tx in transactions) {

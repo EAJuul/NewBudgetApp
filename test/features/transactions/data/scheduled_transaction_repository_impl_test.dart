@@ -63,7 +63,7 @@ void main() {
         accountId: accountId,
         amount: Money(milliunits),
         frequency: frequency,
-        nextDate: nextDate ?? DateTime(2024, 4, 1),
+        nextDate: nextDate ?? DateTime(2024, 4),
       );
 
   test('save then findById returns schedule with nextDate and amount intact',
@@ -77,7 +77,7 @@ void main() {
 
     final found = await repo.findById('sched1');
     expect(found != null, true);
-    expect(found!.amount, Money(-50000));
+    expect(found!.amount, const Money(-50000));
     expect(found.nextDate, DateTime(2024, 6, 15));
     expect(found.frequency, ScheduleFrequency.monthly);
   });
@@ -86,10 +86,10 @@ void main() {
     await seedBudgetAndAccount('b1', 'a1');
     await repo.save(makeSchedule());
     await Future<void>.delayed(const Duration(milliseconds: 10));
-    await repo.save(makeSchedule(nextDate: DateTime(2024, 5, 1)));
+    await repo.save(makeSchedule(nextDate: DateTime(2024, 5)));
 
     final found = await repo.findById('sched1');
-    expect(found!.nextDate, DateTime(2024, 5, 1));
+    expect(found!.nextDate, DateTime(2024, 5));
 
     // Verify createdAt preserved via raw DB access
     final row = await (db.select(db.scheduledTransactions)
@@ -105,7 +105,7 @@ void main() {
     await seedBudgetAndAccount('b1', 'a1');
     await seedBudgetAndAccount('b2', 'a2');
 
-    await repo.save(makeSchedule(id: 'sched1'));
+    await repo.save(makeSchedule());
     await repo.save(makeSchedule(id: 'sched2', accountId: 'a2'));
 
     final rows = await repo.watchAll('b1').first;
@@ -116,11 +116,11 @@ void main() {
       () async {
     await seedBudgetAndAccount('b1', 'a1');
 
-    await repo.save(makeSchedule(id: 'past', nextDate: DateTime(2024, 3, 1)));
+    await repo.save(makeSchedule(id: 'past', nextDate: DateTime(2024, 3)));
     await repo.save(makeSchedule(id: 'today'));
-    await repo.save(makeSchedule(id: 'future', nextDate: DateTime(2024, 5, 1)));
+    await repo.save(makeSchedule(id: 'future', nextDate: DateTime(2024, 5)));
 
-    final dueRows = await repo.due('b1', DateTime(2024, 4, 1));
+    final dueRows = await repo.due('b1', DateTime(2024, 4));
     final ids = dueRows.map((s) => s.id).toSet();
     expect(ids, containsAll(['past', 'today']));
     expect(ids, isNot(contains('future')));

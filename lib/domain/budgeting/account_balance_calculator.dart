@@ -18,8 +18,8 @@ AccountBalances computeAccountBalances({
   required String accountId,
   required Iterable<Transaction> transactions,
 }) {
-  var working = Money.zero();
-  var cleared = Money.zero();
+  var working = const Money.zero();
+  var cleared = const Money.zero();
 
   for (final tx in transactions) {
     if (tx.accountId != accountId || tx.deleted) continue;

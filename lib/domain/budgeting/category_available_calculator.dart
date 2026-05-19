@@ -12,7 +12,7 @@ Map<MonthKey, Money> computeCategoryAvailableSeries({
   required Money Function(MonthKey month) activityFor,
 }) {
   final result = <MonthKey, Money>{};
-  var running = Money.zero();
+  var running = const Money.zero();
   for (final month in months) {
     running = running + assignedFor(month) + activityFor(month);
     result[month] = running;

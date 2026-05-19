@@ -18,7 +18,7 @@ void main() {
         id: 'tx1',
         accountId: 'a1',
         date: DateTime(2024, 3, 15),
-        amount: Money(-12340),
+        amount: const Money(-12340),
         cleared: ClearedStatus.cleared,
         approved: true,
         isSplit: false,
@@ -61,8 +61,8 @@ void main() {
       final transaction = Transaction(
         id: 'tx2',
         accountId: 'a1',
-        date: DateTime(2024, 1, 1),
-        amount: Money.zero(),
+        date: DateTime(2024),
+        amount: const Money.zero(),
         cleared: ClearedStatus.uncleared,
         approved: false,
         isSplit: false,
@@ -86,7 +86,7 @@ void main() {
         id: 'tx3',
         accountId: 'a1',
         date: DateTime(2024, 1, 5),
-        amount: Money.zero(),
+        amount: const Money.zero(),
         cleared: ClearedStatus.uncleared,
         approved: true,
         isSplit: false,
@@ -105,7 +105,7 @@ void main() {
 
   group('subTransactionFromRow / subTransactionToCompanion', () {
     test('round-trips every field', () {
-      final sub = SubTransaction(
+      const sub = SubTransaction(
         id: 's1',
         transactionId: 'tx1',
         amount: Money(5000),
@@ -127,7 +127,7 @@ void main() {
     });
 
     test('null optional fields round-trip', () {
-      final sub = SubTransaction(
+      const sub = SubTransaction(
         id: 's2',
         transactionId: 'tx1',
         amount: Money(-3000),

@@ -9,30 +9,30 @@ void main() {
       final schedule = ScheduledTransaction(
         id: 's1',
         accountId: 'a1',
-        amount: Money(-50000),
+        amount: const Money(-50000),
         frequency: ScheduleFrequency.monthly,
-        nextDate: DateTime(2024, 4, 1),
+        nextDate: DateTime(2024, 4),
         payeeId: 'p1',
         categoryId: 'cat1',
         memo: 'Monthly rent',
       );
       expect(schedule.id, 's1');
       expect(schedule.accountId, 'a1');
-      expect(schedule.amount, Money(-50000));
+      expect(schedule.amount, const Money(-50000));
       expect(schedule.payeeId, 'p1');
       expect(schedule.categoryId, 'cat1');
       expect(schedule.memo, 'Monthly rent');
       expect(schedule.frequency, ScheduleFrequency.monthly);
-      expect(schedule.nextDate, DateTime(2024, 4, 1));
+      expect(schedule.nextDate, DateTime(2024, 4));
     });
 
     test('copyWith(nextDate: ...) updates only that field', () {
       final s = ScheduledTransaction(
         id: 's1',
         accountId: 'a1',
-        amount: Money(10000),
+        amount: const Money(10000),
         frequency: ScheduleFrequency.weekly,
-        nextDate: DateTime(2024, 3, 1),
+        nextDate: DateTime(2024, 3),
       );
       final updated = s.copyWith(nextDate: DateTime(2024, 3, 8));
       expect(updated.id, 's1');
@@ -44,16 +44,16 @@ void main() {
       final s1 = ScheduledTransaction(
         id: 's1',
         accountId: 'a1',
-        amount: Money(10000),
+        amount: const Money(10000),
         frequency: ScheduleFrequency.monthly,
-        nextDate: DateTime(2024, 4, 1),
+        nextDate: DateTime(2024, 4),
       );
       final s2 = ScheduledTransaction(
         id: 's1',
         accountId: 'a1',
-        amount: Money(10000),
+        amount: const Money(10000),
         frequency: ScheduleFrequency.monthly,
-        nextDate: DateTime(2024, 4, 1),
+        nextDate: DateTime(2024, 4),
       );
       expect(s1, equals(s2));
       expect(s1.hashCode, s2.hashCode);

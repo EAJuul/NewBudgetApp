@@ -16,7 +16,7 @@ Money computeReadyToAssign({
       if (a.onBudget) a.id,
   };
 
-  var totalInflow = Money.zero();
+  var totalInflow = const Money.zero();
   for (final tx in transactions) {
     if (onBudgetIds.contains(tx.accountId) &&
         !tx.deleted &&
@@ -27,7 +27,7 @@ Money computeReadyToAssign({
     }
   }
 
-  var totalAssigned = Money.zero();
+  var totalAssigned = const Money.zero();
   for (final cb in categoryBudgets) {
     totalAssigned = totalAssigned + cb.assigned;
   }

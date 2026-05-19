@@ -4,20 +4,20 @@ import 'package:budget_app/domain/budgeting/month_budget.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final line1 = CategoryBudgetLine(
+  const line1 = CategoryBudgetLine(
     categoryId: 'cat1',
     assigned: Money(50000),
     activity: Money(-30000),
     available: Money(20000),
   );
-  final line2 = CategoryBudgetLine(
+  const line2 = CategoryBudgetLine(
     categoryId: 'cat2',
     assigned: Money(20000),
     activity: Money(-10000),
     available: Money(10000),
   );
 
-  MonthBudget buildBudget() => MonthBudget(
+  MonthBudget buildBudget() => const MonthBudget(
         month: MonthKey(2024, 3),
         readyToAssign: Money(5000),
         lines: [line1, line2],
@@ -26,8 +26,8 @@ void main() {
   group('MonthBudget', () {
     test('constructs with correct month, readyToAssign, and lines', () {
       final budget = buildBudget();
-      expect(budget.month, MonthKey(2024, 3));
-      expect(budget.readyToAssign, Money(5000));
+      expect(budget.month, const MonthKey(2024, 3));
+      expect(budget.readyToAssign, const Money(5000));
       expect(budget.lines.length, 2);
     });
 
@@ -35,9 +35,9 @@ void main() {
       final budget = buildBudget();
       final line = budget.lineFor('cat1');
       expect(line, isNotNull);
-      expect(line!.assigned, Money(50000));
-      expect(line.activity, Money(-30000));
-      expect(line.available, Money(20000));
+      expect(line!.assigned, const Money(50000));
+      expect(line.activity, const Money(-30000));
+      expect(line.available, const Money(20000));
     });
 
     test('lineFor returns null for an unknown category id', () {
@@ -54,22 +54,22 @@ void main() {
 
     test('copyWith updates only specified fields', () {
       final budget = buildBudget();
-      final updated = budget.copyWith(readyToAssign: Money(99999));
-      expect(updated.readyToAssign, Money(99999));
-      expect(updated.month, MonthKey(2024, 3));
+      final updated = budget.copyWith(readyToAssign: const Money(99999));
+      expect(updated.readyToAssign, const Money(99999));
+      expect(updated.month, const MonthKey(2024, 3));
       expect(updated.lines.length, 2);
     });
   });
 
   group('CategoryBudgetLine', () {
     test('equality and hashCode as freezed value object', () {
-      final l1 = CategoryBudgetLine(
+      const l1 = CategoryBudgetLine(
         categoryId: 'cat1',
         assigned: Money(10000),
         activity: Money(-5000),
         available: Money(5000),
       );
-      final l2 = CategoryBudgetLine(
+      const l2 = CategoryBudgetLine(
         categoryId: 'cat1',
         assigned: Money(10000),
         activity: Money(-5000),

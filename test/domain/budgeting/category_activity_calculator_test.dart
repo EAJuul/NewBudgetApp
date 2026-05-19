@@ -20,19 +20,19 @@ void main() {
       await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 15),
-        amount: Money(-150000),
+        amount: const Money(-150000),
         categoryId: cat.id,
       );
 
       final txns = await fixture.allTransactions();
       final result = computeCategoryActivity(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: txns,
         subTransactions: [],
       );
 
-      expect(result, Money(-150000));
+      expect(result, const Money(-150000));
     });
 
     test('two transactions in same month sum; different month excluded',
@@ -47,33 +47,33 @@ void main() {
 
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(-50000),
+        date: DateTime(2024, 3),
+        amount: const Money(-50000),
         categoryId: cat.id,
       );
       await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 15),
-        amount: Money(-30000),
+        amount: const Money(-30000),
         categoryId: cat.id,
       );
       // Different month — should be excluded
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 4, 1),
-        amount: Money(-99999),
+        date: DateTime(2024, 4),
+        amount: const Money(-99999),
         categoryId: cat.id,
       );
 
       final txns = await fixture.allTransactions();
       final result = computeCategoryActivity(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: txns,
         subTransactions: [],
       );
 
-      expect(result, Money(-80000)); // -50000 + -30000
+      expect(result, const Money(-80000)); // -50000 + -30000
     });
 
     test('split transaction: each category gets only its sub-amount', () async {
@@ -88,20 +88,20 @@ void main() {
       final tx = await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 10),
-        amount: Money(-100000),
+        amount: const Money(-100000),
         isSplit: true,
         subTransactions: [
           SubTransaction(
             id: 'sub1',
             transactionId: 'placeholder',
-            amount: Money(-60000),
+            amount: const Money(-60000),
             deleted: false,
             categoryId: cat1.id,
           ),
           SubTransaction(
             id: 'sub2',
             transactionId: 'placeholder',
-            amount: Money(-40000),
+            amount: const Money(-40000),
             deleted: false,
             categoryId: cat2.id,
           ),
@@ -113,19 +113,19 @@ void main() {
 
       final result1 = computeCategoryActivity(
         categoryId: cat1.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: txns,
         subTransactions: subs,
       );
       final result2 = computeCategoryActivity(
         categoryId: cat2.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: txns,
         subTransactions: subs,
       );
 
-      expect(result1, Money(-60000));
-      expect(result2, Money(-40000));
+      expect(result1, const Money(-60000));
+      expect(result2, const Money(-40000));
     });
 
     test('deleted transaction and deleted sub-transaction are excluded',
@@ -139,8 +139,8 @@ void main() {
 
       final toDelete = await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(-99999),
+        date: DateTime(2024, 3),
+        amount: const Money(-99999),
         categoryId: cat.id,
       );
       await fixture.transactions.softDelete(toDelete.id);
@@ -150,12 +150,12 @@ void main() {
 
       final result = computeCategoryActivity(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: [deletedTx],
         subTransactions: [],
       );
 
-      expect(result, Money.zero());
+      expect(result, const Money.zero());
     });
 
     test('sub-transaction whose parent is deleted is excluded', () async {
@@ -169,13 +169,13 @@ void main() {
       final tx = await fixture.addTransaction(
         accountId: account.id,
         date: DateTime(2024, 3, 5),
-        amount: Money(-50000),
+        amount: const Money(-50000),
         isSplit: true,
         subTransactions: [
           SubTransaction(
             id: 'sub1',
             transactionId: 'placeholder',
-            amount: Money(-50000),
+            amount: const Money(-50000),
             deleted: false,
             categoryId: cat.id,
           ),
@@ -188,12 +188,12 @@ void main() {
 
       final result = computeCategoryActivity(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: [deletedParent],
         subTransactions: subs,
       );
 
-      expect(result, Money.zero());
+      expect(result, const Money.zero());
     });
 
     test('inflow (positive amount) produces positive activity', () async {
@@ -206,20 +206,20 @@ void main() {
 
       await fixture.addTransaction(
         accountId: account.id,
-        date: DateTime(2024, 3, 1),
-        amount: Money(250000),
+        date: DateTime(2024, 3),
+        amount: const Money(250000),
         categoryId: cat.id,
       );
 
       final txns = await fixture.allTransactions();
       final result = computeCategoryActivity(
         categoryId: cat.id,
-        month: MonthKey(2024, 3),
+        month: const MonthKey(2024, 3),
         transactions: txns,
         subTransactions: [],
       );
 
-      expect(result, Money(250000));
+      expect(result, const Money(250000));
     });
   });
 }
