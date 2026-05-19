@@ -80,7 +80,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M2-T07** — `BudgetService.computeMonth` wiring repositories + engine. _Deps: M2-T06._
 - [x] **M2-T08** — Operation: move money between categories. _Deps: M2-T07._
 - [x] **M2-T09** — Operation: assign / set a category budget. _Deps: M2-T07._
-- [ ] **M2-T10** — Auto-create a credit-card payment category on CC account create. _Deps: M2-T01._
+- [x] **M2-T10** — Auto-create a credit-card payment category on CC account create. _Deps: M2-T01._
 - [ ] **M2-T11** — Transfer handling in balance calculation. _Deps: M2-T02._
 - [ ] **M2-T12** — Full overspending rule (cash vs credit rollover). _Deps: M2-T04, M2-T13._
 - [ ] **M2-T13** — Credit-card spend → payment-category movement. _Deps: M2-T10._
