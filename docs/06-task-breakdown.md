@@ -75,7 +75,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M2-T02** — Account balance calculator (working / cleared / uncleared). _Deps: M2-T01._
 - [x] **M2-T03** — Category activity calculator (incl. splits). _Deps: M2-T01._
 - [x] **M2-T04** — Category available calculator — simple rollover. _Deps: M2-T03._
-- [ ] **M2-T05** — Ready-to-Assign calculator. _Deps: M2-T03._
+- [x] **M2-T05** — Ready-to-Assign calculator. _Deps: M2-T03._
 - [ ] **M2-T06** — `MonthBudget` aggregate entity. _Deps: M2-T04, M2-T05._
 - [ ] **M2-T07** — `BudgetService.computeMonth` wiring repositories + engine. _Deps: M2-T06._
 - [ ] **M2-T08** — Operation: move money between categories. _Deps: M2-T07._
