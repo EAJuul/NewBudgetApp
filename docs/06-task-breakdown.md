@@ -59,7 +59,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
   interface. _Deps: M1-T01._
 - [x] **M1-T16** — `CategoriesDao`. _Deps: M1-T11._
 - [x] **M1-T17** — `CategoryRepositoryImpl` + mappers + tests. _Deps: M1-T15, M1-T16._
-- [ ] **M1-T18** — `CategoryBudget` entity + repo interface + DAO + impl. _Deps: M1-T11, M1-T02._
+- [x] **M1-T18** — `CategoryBudget` entity + repo interface + DAO + impl. _Deps: M1-T11, M1-T02._
 - [ ] **M1-T19** — `Transaction` + `SubTransaction` entities + `TransactionRepository`
   interface. _Deps: M1-T01._
 - [ ] **M1-T20** — `TransactionsDao` (incl. split & transfer queries). _Deps: M1-T11._
