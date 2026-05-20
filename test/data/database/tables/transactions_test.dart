@@ -1,0 +1,229 @@
+import 'package:budget_app/data/database/tables/accounts_table.dart';
+import 'package:budget_app/data/database/tables/budgets_table.dart';
+import 'package:budget_app/data/database/tables/categories_table.dart';
+import 'package:budget_app/data/database/tables/category_groups_table.dart';
+import 'package:budget_app/data/database/tables/payees_table.dart';
+import 'package:budget_app/data/database/tables/scheduled_transactions_table.dart';
+import 'package:budget_app/data/database/tables/sub_transactions_table.dart';
+import 'package:budget_app/data/database/tables/transactions_table.dart';
+import 'package:budget_app/domain/enums.dart';
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:uuid/uuid.dart';
+
+part 'transactions_test.g.dart';
+
+@DriftDatabase(
+  tables: [
+    Transactions,
+    SubTransactions,
+    Accounts,
+    Budgets,
+    Categories,
+    CategoryGroups,
+    Payees,
+    ScheduledTransactions,
+  ],
+)
+class _TestDb extends _$_TestDb {
+  _TestDb()
+      : super(
+          NativeDatabase.memory(
+            setup: (db) => db.execute('PRAGMA foreign_keys = ON'),
+          ),
+        );
+
+  @override
+  int get schemaVersion => 1;
+}
+
+void main() {
+  const uuid = Uuid();
+  const timestamp = '2026-05-16T12:00:00Z';
+  const budgetId = 'budget-1';
+  const accountId = 'account-1';
+
+  group('Transactions and SubTransactions tables', () {
+    late _TestDb db;
+
+    setUp(() async {
+      db = _TestDb();
+      // Insert required parent records for FK constraints
+      await db.into(db.budgets).insert(
+            BudgetsCompanion.insert(
+              id: budgetId,
+              name: 'Test Budget',
+              currencyCode: 'USD',
+              currencyDecimalDigits: 2,
+              dateFormat: 'MM/dd/yyyy',
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            ),
+          );
+      await db.into(db.accounts).insert(
+            AccountsCompanion.insert(
+              id: accountId,
+              budgetId: budgetId,
+              name: 'Test Account',
+              type: AccountType.checking,
+              onBudget: true,
+              closed: false,
+              sortOrder: 0,
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            ),
+          );
+    });
+
+    tearDown(() => db.close());
+
+    test('negative amount with uncleared status and null flagColor round-trip',
+        () async {
+      final txnId = uuid.v4();
+      const amount = -5000; // negative milliunits
+
+      await db.into(db.transactions).insert(
+            TransactionsCompanion.insert(
+              id: txnId,
+              accountId: accountId,
+              date: '2026-05-16',
+              amount: amount,
+              cleared: ClearedStatus.uncleared,
+              approved: true,
+              isSplit: false,
+              deleted: false,
+              createdAt: timestamp,
+              updatedAt: timestamp,
+              flagColor: const Value(null),
+            ),
+          );
+
+      final row = await (db.select(db.transactions)
+            ..where((t) => t.id.equals(txnId)))
+          .getSingle();
+
+      expect(row.amount, amount);
+      expect(row.cleared, ClearedStatus.uncleared);
+      expect(row.flagColor, null);
+    });
+
+    test('cleared and flagColor enum columns round-trip', () async {
+      final txnId = uuid.v4();
+
+      await db.into(db.transactions).insert(
+            TransactionsCompanion.insert(
+              id: txnId,
+              accountId: accountId,
+              date: '2026-05-16',
+              amount: 10000,
+              cleared: ClearedStatus.reconciled,
+              approved: true,
+              isSplit: false,
+              deleted: false,
+              createdAt: timestamp,
+              updatedAt: timestamp,
+              flagColor: const Value(FlagColor.red),
+            ),
+          );
+
+      final row = await (db.select(db.transactions)
+            ..where((t) => t.id.equals(txnId)))
+          .getSingle();
+
+      expect(row.cleared, ClearedStatus.reconciled);
+      expect(row.flagColor, FlagColor.red);
+    });
+
+    test('isSplit transaction with SubTransactions rows', () async {
+      final txnId = uuid.v4();
+
+      await db.into(db.transactions).insert(
+            TransactionsCompanion.insert(
+              id: txnId,
+              accountId: accountId,
+              date: '2026-05-16',
+              amount: 15000,
+              cleared: ClearedStatus.uncleared,
+              approved: true,
+              isSplit: true,
+              deleted: false,
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            ),
+          );
+
+      final subTxn1Id = uuid.v4();
+      final subTxn2Id = uuid.v4();
+
+      await db.into(db.subTransactions).insert(
+            SubTransactionsCompanion.insert(
+              id: subTxn1Id,
+              transactionId: txnId,
+              amount: 8000,
+              deleted: false,
+            ),
+          );
+
+      await db.into(db.subTransactions).insert(
+            SubTransactionsCompanion.insert(
+              id: subTxn2Id,
+              transactionId: txnId,
+              amount: 7000,
+              deleted: false,
+            ),
+          );
+
+      final subRows = await (db.select(db.subTransactions)
+            ..where((t) => t.transactionId.equals(txnId)))
+          .get();
+
+      expect(subRows.length, 2);
+      expect(subRows[0].amount, 8000);
+      expect(subRows[1].amount, 7000);
+    });
+
+    test('deleted flag round-trips', () async {
+      final txnId = uuid.v4();
+
+      await db.into(db.transactions).insert(
+            TransactionsCompanion.insert(
+              id: txnId,
+              accountId: accountId,
+              date: '2026-05-16',
+              amount: 5000,
+              cleared: ClearedStatus.uncleared,
+              approved: true,
+              isSplit: false,
+              deleted: true,
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            ),
+          );
+
+      final row = await (db.select(db.transactions)
+            ..where((t) => t.id.equals(txnId)))
+          .getSingle();
+
+      expect(row.deleted, isTrue);
+    });
+
+    test('SubTransactions rejects non-existent transactionId (FK enforced)',
+        () async {
+      final subTxnId = uuid.v4();
+      const nonExistentTxnId = 'does-not-exist';
+
+      await expectLater(
+        () => db.into(db.subTransactions).insert(
+              SubTransactionsCompanion.insert(
+                id: subTxnId,
+                transactionId: nonExistentTxnId,
+                amount: 5000,
+                deleted: false,
+              ),
+            ),
+        throwsA(anything),
+      );
+    });
+  });
+}

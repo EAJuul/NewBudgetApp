@@ -46,48 +46,48 @@ Legend: `[ ]` todo · `[x]` done & merged.
   testing constructor, Riverpod provider. _Deps: M1-T03._
 - [x] **M1-T05** — Tables: `budgets`, `accounts`. _Deps: M1-T04._
 - [x] **M1-T06** — Tables: `category_groups`, `categories`. _Deps: M1-T04._
-- [ ] **M1-T07** — Tables: `category_budgets`, `targets`. _Deps: M1-T06._
-- [ ] **M1-T08** — Tables: `payees`, `settings`. _Deps: M1-T04._
-- [ ] **M1-T09** — Tables: `transactions`, `sub_transactions`. _Deps: M1-T05, M1-T06._
-- [ ] **M1-T10** — Table: `scheduled_transactions`. _Deps: M1-T05, M1-T06._
-- [ ] **M1-T11** — Wire all tables into `AppDatabase`; `MigrationStrategy`
+- [x] **M1-T07** — Tables: `category_budgets`, `targets`. _Deps: M1-T06._
+- [x] **M1-T08** — Tables: `payees`, `settings`. _Deps: M1-T04._
+- [x] **M1-T09** — Tables: `transactions`, `sub_transactions`. _Deps: M1-T05, M1-T06._
+- [x] **M1-T10** — Table: `scheduled_transactions`. _Deps: M1-T05, M1-T06._
+- [x] **M1-T11** — Wire all tables into `AppDatabase`; `MigrationStrategy`
   skeleton; export schema JSON. _Deps: M1-T05..M1-T10._
-- [ ] **M1-T12** — `Account` entity + `AccountRepository` interface. _Deps: M1-T01._
-- [ ] **M1-T13** — `AccountsDao`. _Deps: M1-T11._
-- [ ] **M1-T14** — `AccountRepositoryImpl` + row↔entity mappers + tests. _Deps: M1-T12, M1-T13._
-- [ ] **M1-T15** — `CategoryGroup` + `Category` entities + `CategoryRepository`
+- [x] **M1-T12** — `Account` entity + `AccountRepository` interface. _Deps: M1-T01._
+- [x] **M1-T13** — `AccountsDao`. _Deps: M1-T11._
+- [x] **M1-T14** — `AccountRepositoryImpl` + row↔entity mappers + tests. _Deps: M1-T12, M1-T13._
+- [x] **M1-T15** — `CategoryGroup` + `Category` entities + `CategoryRepository`
   interface. _Deps: M1-T01._
-- [ ] **M1-T16** — `CategoriesDao`. _Deps: M1-T11._
-- [ ] **M1-T17** — `CategoryRepositoryImpl` + mappers + tests. _Deps: M1-T15, M1-T16._
-- [ ] **M1-T18** — `CategoryBudget` entity + repo interface + DAO + impl. _Deps: M1-T11, M1-T02._
-- [ ] **M1-T19** — `Transaction` + `SubTransaction` entities + `TransactionRepository`
+- [x] **M1-T16** — `CategoriesDao`. _Deps: M1-T11._
+- [x] **M1-T17** — `CategoryRepositoryImpl` + mappers + tests. _Deps: M1-T15, M1-T16._
+- [x] **M1-T18** — `CategoryBudget` entity + repo interface + DAO + impl. _Deps: M1-T11, M1-T02._
+- [x] **M1-T19** — `Transaction` + `SubTransaction` entities + `TransactionRepository`
   interface. _Deps: M1-T01._
-- [ ] **M1-T20** — `TransactionsDao` (incl. split & transfer queries). _Deps: M1-T11._
-- [ ] **M1-T21** — `TransactionRepositoryImpl` + mappers + tests. _Deps: M1-T19, M1-T20._
-- [ ] **M1-T22** — `Payee` entity + repo interface + DAO + impl. _Deps: M1-T11._
-- [ ] **M1-T23** — `Target` entity + repo interface + DAO + impl. _Deps: M1-T11._
-- [ ] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
-- [ ] **M1-T25** — `Budget` entity + repo + DAO + impl; `SettingsStore`. _Deps: M1-T11._
-- [ ] **M1-T26** — Riverpod providers exposing every repository (DI wiring). _Deps: M1-T14..M1-T25._
+- [x] **M1-T20** — `TransactionsDao` (incl. split & transfer queries). _Deps: M1-T11._
+- [x] **M1-T21** — `TransactionRepositoryImpl` + mappers + tests. _Deps: M1-T19, M1-T20._
+- [x] **M1-T22** — `Payee` entity + repo interface + DAO + impl. _Deps: M1-T11._
+- [x] **M1-T23** — `Target` entity + repo interface + DAO + impl. _Deps: M1-T11._
+- [x] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
+- [x] **M1-T25** — `Budget` entity + repo + DAO + impl; `SettingsStore`. _Deps: M1-T11._
+- [x] **M1-T26** — Riverpod providers exposing every repository (DI wiring). _Deps: M1-T14..M1-T25._
 - [ ] **M1-T27** — `CurrencyFormatter`: money display + parsing (`core/money/`). _Deps: M1-T01._
 
 ## M2 — Budget engine (pure `domain/budgeting/`)
-- [ ] **M2-T01** — `BudgetFixture` test helper: builds a known in-memory budget. _Deps: M1-T26._
-- [ ] **M2-T02** — Account balance calculator (working / cleared / uncleared). _Deps: M2-T01._
-- [ ] **M2-T03** — Category activity calculator (incl. splits). _Deps: M2-T01._
-- [ ] **M2-T04** — Category available calculator — simple rollover. _Deps: M2-T03._
-- [ ] **M2-T05** — Ready-to-Assign calculator. _Deps: M2-T03._
-- [ ] **M2-T06** — `MonthBudget` aggregate entity. _Deps: M2-T04, M2-T05._
-- [ ] **M2-T07** — `BudgetService.computeMonth` wiring repositories + engine. _Deps: M2-T06._
-- [ ] **M2-T08** — Operation: move money between categories. _Deps: M2-T07._
-- [ ] **M2-T09** — Operation: assign / set a category budget. _Deps: M2-T07._
-- [ ] **M2-T10** — Auto-create a credit-card payment category on CC account create. _Deps: M2-T01._
-- [ ] **M2-T11** — Transfer handling in balance calculation. _Deps: M2-T02._
-- [ ] **M2-T12** — Full overspending rule (cash vs credit rollover). _Deps: M2-T04, M2-T13._
-- [ ] **M2-T13** — Credit-card spend → payment-category movement. _Deps: M2-T10._
-- [ ] **M2-T14** — `advance(date, frequency)` scheduled-date function. _Deps: M2-T01._
-- [ ] **M2-T15** — Target progress calculator (all four target types). _Deps: M2-T04._
-- [ ] **M2-T16** — Engine invariant checks + property-style tests. _Deps: M2-T07..M2-T15._
+- [x] **M2-T01** — `BudgetFixture` test helper: builds a known in-memory budget. _Deps: M1-T26._
+- [x] **M2-T02** — Account balance calculator (working / cleared / uncleared). _Deps: M2-T01._
+- [x] **M2-T03** — Category activity calculator (incl. splits). _Deps: M2-T01._
+- [x] **M2-T04** — Category available calculator — simple rollover. _Deps: M2-T03._
+- [x] **M2-T05** — Ready-to-Assign calculator. _Deps: M2-T03._
+- [x] **M2-T06** — `MonthBudget` aggregate entity. _Deps: M2-T04, M2-T05._
+- [x] **M2-T07** — `BudgetService.computeMonth` wiring repositories + engine. _Deps: M2-T06._
+- [x] **M2-T08** — Operation: move money between categories. _Deps: M2-T07._
+- [x] **M2-T09** — Operation: assign / set a category budget. _Deps: M2-T07._
+- [x] **M2-T10** — Auto-create a credit-card payment category on CC account create. _Deps: M2-T01._
+- [x] **M2-T11** — Transfer handling in balance calculation. _Deps: M2-T02._
+- [x] **M2-T12** — Full overspending rule (cash vs credit rollover). _Deps: M2-T04, M2-T13._
+- [x] **M2-T13** — Credit-card spend → payment-category movement. _Deps: M2-T10._
+- [x] **M2-T14** — `advance(date, frequency)` scheduled-date function. _Deps: M2-T01._
+- [x] **M2-T15** — Target progress calculator (all four target types). _Deps: M2-T04._
+- [x] **M2-T16** — Engine invariant checks + property-style tests. _Deps: M2-T07..M2-T15._
 
 ## M3 — Accounts feature
 - [ ] **M3-T01** — Account list controller. _Deps: M1-T26._
