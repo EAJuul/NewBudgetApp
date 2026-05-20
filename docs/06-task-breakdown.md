@@ -91,7 +91,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M2-T16** — Engine invariant checks + property-style tests. _Deps: M2-T07..M2-T15._
 
 ## M3 — Accounts feature
-- [ ] **M3-T01** — Account list controller. _Deps: M1-T26._
+- [x] **M3-T01** — Account list controller. _Deps: M1-T26._
 - [ ] **M3-T02** — Account list screen. _Deps: M3-T01._
 - [ ] **M3-T03** — Account list item widget (name + balance). _Deps: M2-T02._
 - [ ] **M3-T04** — Create-account form controller. _Deps: M1-T26._
