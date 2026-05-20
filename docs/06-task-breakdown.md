@@ -70,7 +70,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
 - [x] **M1-T25** — `Budget` entity + repo + DAO + impl; `SettingsStore`. _Deps: M1-T11._
 - [x] **M1-T26** — Riverpod providers exposing every repository (DI wiring). _Deps: M1-T14..M1-T25._
-- [ ] **M1-T27** — `CurrencyFormatter`: money display + parsing (`core/money/`). _Deps: M1-T01._
+- [x] **M1-T27** — `CurrencyFormatter`: money display + parsing (`core/money/`). _Deps: M1-T01._
 
 ## M2 — Budget engine (pure `domain/budgeting/`)
 - [x] **M2-T01** — `BudgetFixture` test helper: builds a known in-memory budget. _Deps: M1-T26._
