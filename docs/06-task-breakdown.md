@@ -92,8 +92,8 @@ Legend: `[ ]` todo · `[x]` done & merged.
 
 ## M3 — Accounts feature
 - [x] **M3-T01** — Account list controller. _Deps: M1-T26._
-- [ ] **M3-T02** — Account list screen. _Deps: M3-T01._
-- [ ] **M3-T03** — Account list item widget (name + balance). _Deps: M2-T02._
+- [x] **M3-T02** — Account list screen. _Deps: M3-T01._
+- [x] **M3-T03** — Account list item widget (name + balance). _Deps: M2-T02._
 - [ ] **M3-T04** — Create-account form controller. _Deps: M1-T26._
 - [ ] **M3-T05** — Create-account screen (type, name, starting balance). _Deps: M3-T04._
 - [ ] **M3-T06** — Edit-account screen. _Deps: M3-T04._
