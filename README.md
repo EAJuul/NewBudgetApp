@@ -15,8 +15,9 @@ data lives on the device; no server, no account, no network dependency.
 3. The task list is `docs/06-task-breakdown.md` — the **single source of truth
    for progress**. Start at the lowest-numbered unchecked task whose
    dependencies are met: **M0-T01**.
-4. Detailed task cards live in `tasks/`. All of M0 and `M1-T01..M1-T04` are
-   written; expand the rest from `tasks/TEMPLATE.md` as you go.
+4. Detailed task cards live under `tasks/M<NN>/` (e.g. `tasks/M1/M1-T13.md`).
+   All of M0, M1, M2, and M3 are written; expand the rest from
+   `tasks/TEMPLATE.md` as you go.
 
 ## Documents
 | Doc | Purpose |

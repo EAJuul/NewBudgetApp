@@ -9,10 +9,11 @@ merged.
 - **Granularity:** each task is sized for one small-context LLM session — at
   most ~200 lines of new code plus its tests. If a task turns out larger, split
   it (`M4-T05a`, `M4-T05b`) and note it here.
-- **Detailed cards:** full task cards exist in `tasks/` for all of M0, M1, and
-  M2. For every remaining task (M3 onward) the orchestrator expands the
-  one-line entry below into `tasks/<ID>.md` using `tasks/TEMPLATE.md` before
-  handing it to a coder. See `10-agent-workflow.md`.
+- **Detailed cards:** full task cards live under `tasks/M<NN>/` (e.g.
+  `tasks/M1/M1-T13.md`). Cards exist for all of M0, M1, M2, and M3. For every
+  remaining task (M4 onward) the orchestrator expands the one-line entry below
+  into `tasks/M<NN>/<ID>.md` using `tasks/TEMPLATE.md` before handing it to a
+  coder. See `10-agent-workflow.md`.
 - **Definition of Done:** see `09-coding-standards.md`. In short — compiles,
   formatted, `analyze --fatal-infos` clean, tests written and green, acceptance
   criteria met, this checkbox ticked.

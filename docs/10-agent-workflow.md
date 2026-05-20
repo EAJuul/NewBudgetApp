@@ -13,9 +13,10 @@ roles; they may be one model in a loop or two different models.
   load that as the agent's system prompt.
 
 ## The task card
-Every task is described by a card based on `tasks/TEMPLATE.md`. Detailed cards
-already exist for all of M0 and for `M1-T01..M1-T04` in `tasks/`. For every
-other task the orchestrator creates the card from the one-line entry in
+Every task is described by a card based on `tasks/TEMPLATE.md`. Cards live in
+per-milestone folders — `tasks/M0/M0-T01.md`, `tasks/M1/M1-T13.md`, etc.
+Detailed cards already exist for all of M0, M1, M2, and M3. For every other
+task the orchestrator creates the card from the one-line entry in
 `06-task-breakdown.md` **before** handing it to a coder.
 
 A card is self-contained: it names the files to create/edit, the exact public
@@ -26,7 +27,7 @@ and the tests to write. A coder should never need more than: this document,
 ## Task lifecycle
 ```
 1. Orchestrator picks the lowest-numbered unchecked task whose deps are all done.
-2. Orchestrator expands it into tasks/<ID>.md from the template.
+2. Orchestrator expands it into tasks/M<NN>/<ID>.md from the template.
 3. Coder reads: 09-coding-standards.md + this doc + the card + the listed files.
 4. Coder implements code + tests on a branch m<NN>/<id>-<slug>.
 5. Coder runs: build_runner (if needed) -> dart format lib test ->
@@ -48,7 +49,8 @@ and the tests to write. A coder should never need more than: this document,
 
 ## Expanding a task into a card (orchestrator)
 For a one-line entry in `06-task-breakdown.md`:
-1. Copy `tasks/TEMPLATE.md` to `tasks/<ID>.md`.
+1. Copy `tasks/TEMPLATE.md` to `tasks/M<NN>/<ID>.md` (creating the milestone
+   folder if it does not yet exist).
 2. Fill in: goal; exact file paths; the public API signatures to produce;
    dependencies; acceptance criteria; the test cases to write; pointers to the
    relevant doc sections.
@@ -70,7 +72,7 @@ A task is done when every item in the Definition of Done list in
 `09-coding-standards.md` is satisfied and the card's acceptance criteria pass.
 
 ## Quick reference — handoff prompt for a coder
-> Implement task `<ID>`. Read `tasks/<ID>.md`, `docs/09-coding-standards.md`,
+> Implement task `<ID>`. Read `tasks/M<NN>/<ID>.md`, `docs/09-coding-standards.md`,
 > `docs/10-agent-workflow.md`, and `docs/11-implementor-skill.md`. Touch only
 > the files the card lists. Write
 > the code and the tests. Run `build_runner`, `dart format lib test`,
