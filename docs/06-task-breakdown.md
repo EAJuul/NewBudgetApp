@@ -34,7 +34,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
   with placeholder barrel files. _Deps: M0-T01._
 - [x] **M0-T05** — App shell: `go_router` skeleton, Material 3 theme, a single
   placeholder route. _Deps: M0-T03, M0-T04._
-- [ ] **M0-T06** — Verify `ci.yml` is green on a real pull request. _Deps: M0-T05._
+- [x] **M0-T06** — Verify `ci.yml` is green on a real pull request. _Deps: M0-T05._
 - [ ] **M0-T07** — Verify `build.yml` produces an Android APK artifact. _Deps: M0-T06._
 - [x] **M0-T08** — Project `README` + `CONTRIBUTING` pointing at `docs/`. _Deps: M0-T01._
 
