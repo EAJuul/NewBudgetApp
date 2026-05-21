@@ -9,10 +9,11 @@ merged.
 - **Granularity:** each task is sized for one small-context LLM session — at
   most ~200 lines of new code plus its tests. If a task turns out larger, split
   it (`M4-T05a`, `M4-T05b`) and note it here.
-- **Detailed cards:** full task cards exist in `tasks/` for all of M0, M1, and
-  M2. For every remaining task (M3 onward) the orchestrator expands the
-  one-line entry below into `tasks/<ID>.md` using `tasks/TEMPLATE.md` before
-  handing it to a coder. See `10-agent-workflow.md`.
+- **Detailed cards:** full task cards live under `tasks/M<NN>/` (e.g.
+  `tasks/M1/M1-T13.md`). Cards exist for all of M0, M1, M2, and M3. For every
+  remaining task (M4 onward) the orchestrator expands the one-line entry below
+  into `tasks/M<NN>/<ID>.md` using `tasks/TEMPLATE.md` before handing it to a
+  coder. See `10-agent-workflow.md`.
 - **Definition of Done:** see `09-coding-standards.md`. In short — compiles,
   formatted, `analyze --fatal-infos` clean, tests written and green, acceptance
   criteria met, this checkbox ticked.
@@ -33,8 +34,8 @@ Legend: `[ ]` todo · `[x]` done & merged.
   with placeholder barrel files. _Deps: M0-T01._
 - [x] **M0-T05** — App shell: `go_router` skeleton, Material 3 theme, a single
   placeholder route. _Deps: M0-T03, M0-T04._
-- [ ] **M0-T06** — Verify `ci.yml` is green on a real pull request. _Deps: M0-T05._
-- [ ] **M0-T07** — Verify `build.yml` produces an Android APK artifact. _Deps: M0-T06._
+- [x] **M0-T06** — Verify `ci.yml` is green on a real pull request. _Deps: M0-T05._
+- [x] **M0-T07** — Verify `build.yml` produces an Android APK artifact. _Deps: M0-T06._
 - [x] **M0-T08** — Project `README` + `CONTRIBUTING` pointing at `docs/`. _Deps: M0-T01._
 
 ## M1 — Data layer foundations
@@ -69,7 +70,7 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M1-T24** — `ScheduledTransaction` entity + repo interface + DAO + impl. _Deps: M1-T11._
 - [x] **M1-T25** — `Budget` entity + repo + DAO + impl; `SettingsStore`. _Deps: M1-T11._
 - [x] **M1-T26** — Riverpod providers exposing every repository (DI wiring). _Deps: M1-T14..M1-T25._
-- [ ] **M1-T27** — `CurrencyFormatter`: money display + parsing (`core/money/`). _Deps: M1-T01._
+- [x] **M1-T27** — `CurrencyFormatter`: money display + parsing (`core/money/`). _Deps: M1-T01._
 
 ## M2 — Budget engine (pure `domain/budgeting/`)
 - [x] **M2-T01** — `BudgetFixture` test helper: builds a known in-memory budget. _Deps: M1-T26._
@@ -90,9 +91,9 @@ Legend: `[ ]` todo · `[x]` done & merged.
 - [x] **M2-T16** — Engine invariant checks + property-style tests. _Deps: M2-T07..M2-T15._
 
 ## M3 — Accounts feature
-- [ ] **M3-T01** — Account list controller. _Deps: M1-T26._
-- [ ] **M3-T02** — Account list screen. _Deps: M3-T01._
-- [ ] **M3-T03** — Account list item widget (name + balance). _Deps: M2-T02._
+- [x] **M3-T01** — Account list controller. _Deps: M1-T26._
+- [x] **M3-T02** — Account list screen. _Deps: M3-T01._
+- [x] **M3-T03** — Account list item widget (name + balance). _Deps: M2-T02._
 - [ ] **M3-T04** — Create-account form controller. _Deps: M1-T26._
 - [ ] **M3-T05** — Create-account screen (type, name, starting balance). _Deps: M3-T04._
 - [ ] **M3-T06** — Edit-account screen. _Deps: M3-T04._
